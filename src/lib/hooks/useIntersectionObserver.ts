@@ -43,5 +43,6 @@ export default function useIntersectionObserver({
     return () => {
       observer.unobserve(el);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [target?.current, enabled]);
 }
