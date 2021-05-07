@@ -4,6 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import { Hidden, Grid, Box, Container, Paper } from '@material-ui/core';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 
+import Head from '../../components/Head';
 import Header from '../../components/Header';
 import LoadMore from '../../components/Loading';
 import Messages from '../../components/Messages';
@@ -55,7 +56,9 @@ export default function Message() {
   });
 
   return (
-    <Container maxWidth='xl' disableGutters>
+    <>
+      <Head title='Chats' description={auth?.profile.name} />
+      <Container maxWidth='xl' disableGutters>
       <Hidden xsDown>
         <Sidebar user={auth} />
       </Hidden>
@@ -107,5 +110,6 @@ export default function Message() {
         </Grid>
       </div>
     </Container>
+    </>
   );
 }

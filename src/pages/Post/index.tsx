@@ -67,7 +67,7 @@ export default function PostPage() {
   });
 
   return (
-    <Page>
+    <Page title='Post'>
       <Header back title='Post' user={user} />
       <Paper
         elevation={0}

@@ -5,11 +5,12 @@ import Typography from '@material-ui/core/Typography';
 import { Paper, Hidden, Grid, Box, Container } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
-import { Chat, ChatForm } from '../../components/Chat';
+import Head from '../../components/Head';
 import Header from '../../components/Header';
 import Messages from '../../components/Messages';
 import Sidebar from '../../components/Sidebar';
 import LoadMore, { CenteredLoading } from '../../components/Loading';
+import { Chat, ChatForm } from '../../components/Chat';
 import { KEYS } from '../../lib/constants';
 import { User } from '../../types';
 import {
@@ -99,6 +100,7 @@ export default function ChatPage() {
 
   return (
     <>
+      <Head title='Messages' description={auth?.profile.name} />
       <Container maxWidth='xl' disableGutters>
         <Hidden xsDown>
           <Sidebar user={auth} />

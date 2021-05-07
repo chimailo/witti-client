@@ -70,7 +70,7 @@ export default function Explore() {
   };
 
   return (
-    <Page>
+    <Page title='Explore' description='Search for tags and users.'>
       <Header back search />
       <Paper elevation={0} style={{ marginTop: 4 }}>
         <Typography className={classes.title}>

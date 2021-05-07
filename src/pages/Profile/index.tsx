@@ -47,7 +47,7 @@ export default function Tag() {
   }
 
   return (
-    <Page cacheKey={key}>
+    <Page cacheKey={key} title='Profile' description={user?.profile.name}>
       <Header back title={`${user?.profile.name} `} />
       {user && (
         <ProfileCard meta user={user} cacheKey={[KEYS.USER, user.profile.username]} />

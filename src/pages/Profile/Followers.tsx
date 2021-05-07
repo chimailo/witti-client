@@ -33,7 +33,7 @@ export default function FollowersTab() {
   });
 
   return (
-    <Page>
+    <Page title='Followers' description={user?.profile.name}>
       <Header
         back
         title={`${user?.profile.name}`}

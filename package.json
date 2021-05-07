@@ -31,6 +31,7 @@
     "formik": "^2.2.6",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-helmet": "^6.1.0",
     "react-query": "^3.13.11",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
@@ -66,6 +67,7 @@
   "devDependencies": {
     "@types/draft-js": "^0.11.1",
     "@types/lodash.debounce": "^4.0.6",
+    "@types/react-helmet": "^6.1.1",
     "@types/react-router-dom": "^5.1.7",
     "@types/react-swipeable-views": "^0.13.0",
     "@types/react-swipeable-views-utils": "^0.13.2",

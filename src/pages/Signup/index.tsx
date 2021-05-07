@@ -10,6 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, createStyles, Theme, useTheme } from '@material-ui/core';
 
+import Head from '../../components/Head';
 import Logo from '../../components/svg/logo';
 import { CenteredLoading } from '../../components/Loading';
 import { ROUTES } from '../../lib/constants';
@@ -74,6 +75,7 @@ export default function Signup() {
 
   return (
     <>
+      <Head title='Sign up' />
       {status === 'loading' ? (
         <CenteredLoading height='100vh' />
       ) : (

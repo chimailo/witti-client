@@ -37,7 +37,7 @@ export default function Tag() {
   const key = value === 1 ? [KEYS.TAGS, 'top'] : [KEYS.TAGS, 'latest'];
 
   return (
-    <Page cacheKey={key}>
+    <Page cacheKey={key} title='Tags' description='Select tags to follow'>
       <Header back title={`#${name}`} meta={meta} />
       <Box flexGrow={1} mt={0.5}>
         <AppBar position='static' className={classes.appbar}>

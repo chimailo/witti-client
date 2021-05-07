@@ -33,7 +33,7 @@ export default function Home() {
   };
 
   return (
-    <Page cacheKey={key}>
+    <Page cacheKey={key} title='Home'>
       <Header avatar title='home' />
       <Box flexGrow={1} mt={0.5}>
         <AppBar position='static' className={classes.appbar}>

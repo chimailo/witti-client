@@ -20,6 +20,7 @@ import {
   Box,
 } from '@material-ui/core';
 
+import Head from '../../components/Head';
 import hero from '../../hero.jpg';
 import Logo from '../../components/svg/logo';
 import { CenteredLoading } from '../../components/Loading';
@@ -108,6 +109,7 @@ export default function Landing() {
 
   return (
     <>
+    <Head title='Landing' />
     {status === 'loading' ? (
       <CenteredLoading height='100vh' />
     ) : (

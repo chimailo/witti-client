@@ -42,7 +42,7 @@ export default function Notifications() {
   });
 
   return (
-    <Page>
+    <Page title='Notifications'>
       <Header back title='Notifications' />
       {isLoading ? (
         <CenteredLoading />

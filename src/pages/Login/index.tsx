@@ -13,6 +13,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, createStyles, Theme, useTheme } from '@material-ui/core';
 
+import Head from '../../components/Head';
 import LoginForm from '../../components/forms/Login';
 import Logo from '../../components/svg/logo';
 import { CenteredLoading } from '../../components/Loading';
@@ -83,6 +84,7 @@ function Login(
 
   return (
     <>
+      <Head title='Login' />
       {status === 'loading' ? (
         <CenteredLoading height='100vh' />
       ) : (

@@ -3,6 +3,7 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import Head from './Head';
 import Sidebar from './Sidebar';
 import Widgets from './Widgets';
 import { useAuth } from '../lib/hooks/user';
@@ -26,14 +27,20 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function Page({
   children,
   cacheKey,
+  title,
+  description
 }: {
   cacheKey?: string | any[];
   children: React.ReactNode;
+  title: string
+  description?: string
 }) {
   const classes = useStyles();
   const { data: auth } = useAuth();
 
   return (
+    <>
+    <Head title={title} description={description} />
     <Container maxWidth='xl' disableGutters>
       <Hidden xsDown>
         <Sidebar user={auth} cacheKey={cacheKey} />
@@ -51,5 +58,6 @@ export default function Page({
         </Grid>
       </div>
     </Container>
+    </>
   );
 }
