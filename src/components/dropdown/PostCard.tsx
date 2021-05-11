@@ -8,7 +8,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import FlagOutlinedIcon from '@material-ui/icons/FlagOutlined';
 import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
-import TwitterIcon from '@material-ui/icons/Twitter';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
 import DeleteModal from '../modals/DeletePost';
@@ -116,21 +115,6 @@ export default function PostCardMenu(props: MenuProps) {
             />
           </MenuItem>
         )}
-        <MenuItem
-          onClick={() => {
-            closeMenu();
-            // handle twitter logic
-          }}
-          classes={{ root: classes.menuItem }}
-        >
-          <ListItemIcon className={classes.listItemIcon}>
-            <TwitterIcon fontSize='small' />
-          </ListItemIcon>
-          <ListItemText
-            primary='Tweet this Post'
-            primaryTypographyProps={{ variant: 'subtitle2' }}
-          />
-        </MenuItem>
         {post.author.id === auth?.id && (
           <MenuItem
             onClick={openDeleteModal}

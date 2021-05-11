@@ -245,7 +245,7 @@ function FeaturedPostsCarousel({ posts }: { posts: Post[] }) {
             component='p'
           >
             - { // @ts-expect-error
-             post.author.profile.username}
+            post.author.profile.username}
           </Typography>
         </>
       ))}

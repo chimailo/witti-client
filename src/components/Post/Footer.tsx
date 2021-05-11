@@ -8,10 +8,11 @@ import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import FavoriteOutlinedIcon from '@material-ui/icons/FavoriteOutlined';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import ModeCommentOutlinedIcon from '@material-ui/icons/ModeCommentOutlined';
-import TwitterIcon from '@material-ui/icons/Twitter';
+import ShareIcon from '@material-ui/icons/Share';
 
 import CreatePostModal from '../modals/CreatePost';
 import DeleteModal from '../modals/DeletePost';
+import Dropdown from '../dropdown/share';
 import { APIError, Post } from '../../types';
 import { useAuth } from '../../lib/hooks/user';
 import { useDeletePost } from '../../lib/hooks/posts';
@@ -19,15 +20,20 @@ import { useDeletePost } from '../../lib/hooks/posts';
 export default function PostFooter({
   post,
 }: {
-  post: Pick<Post, 'author' | 'isLiked' | 'id'>;
+  post: Pick<Post, 'author' | 'isLiked' | 'id' | 'tags'>;
 }) {
   const [isCreatePostModalOpen, setCreatePostModal] = useState(false);
   const [isDeleteModalOpen, setDeleteModal] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const editorRef = useRef<PluginEditor>(null);
   const { postId } = useParams<{ postId: string }>();
   const queryClient = useQueryClient();
   const deletePost = useDeletePost();
   const { data: user } = useAuth();
+
+  const handleDropdownClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
 
   const updateLike = useMutation(
     async (postId: number) => {
@@ -85,10 +91,10 @@ export default function PostFooter({
           <ModeCommentOutlinedIcon fontSize='small' />
         </IconButton>
         <IconButton
-          aria-label='share on twitter'
-          // onClick={() => updatePostLike(id)}
+          aria-label='share on social media'
+          onClick={handleDropdownClick}
         >
-          <TwitterIcon fontSize='small' />
+          <ShareIcon fontSize='small' />
         </IconButton>
         {post.author.id === user?.id && (
           <IconButton
@@ -99,6 +105,12 @@ export default function PostFooter({
           </IconButton>
         )}
       </Box>
+      <Dropdown
+      url={`/posts/${post.id}`}
+      tags={post.tags}
+        anchorEl={anchorEl}
+        closeMenu={() => setAnchorEl(null)}
+      />
       <CreatePostModal
         editorRef={editorRef}
         isOpen={isCreatePostModalOpen}

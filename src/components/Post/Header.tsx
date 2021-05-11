@@ -3,7 +3,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Box, Avatar, Link, Typography, IconButton } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Dropdown from '../../components/dropdown/PostCard';
+import Dropdown from '../dropdown/PostCard';
 import { Post } from '../../types';
 import { useDeletePost } from '../../lib/hooks/posts';
 

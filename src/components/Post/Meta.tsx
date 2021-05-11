@@ -4,7 +4,9 @@ import { Box, Typography, IconButton } from '@material-ui/core';
 import FavoriteOutlinedIcon from '@material-ui/icons/FavoriteOutlined';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import ModeCommentOutlinedIcon from '@material-ui/icons/ModeCommentOutlined';
+import ShareIcon from '@material-ui/icons/Share';
 import CreatePostModal from '../modals/CreatePost';
+import Dropdown from '../dropdown/share';
 import { Post } from '../../types';
 import { useUpdatePostLike } from '../../lib/hooks/posts';
 
@@ -20,14 +22,19 @@ interface PostMetaProps {
 }
 
 export default function PostMeta({ post, page, cacheKey }: PostMetaProps) {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isModalOpen, setModal] = useState(false);
   const editorRef = useRef<PluginEditor>(null);
   //   const classes = useStyles();
   const updateLike = useUpdatePostLike();
 
+  const handleDropdownClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
   return (
     <>
-      <Box display='flex' alignItems='center'>
+      <Box display='flex' alignItems='center' justifyContent='space-around'>
         {!post.parent && (
           <IconButton
             aria-label='add comment'
@@ -64,7 +71,20 @@ export default function PostMeta({ post, page, cacheKey }: PostMetaProps) {
             <FavoriteBorderOutlinedIcon fontSize='small' />
           )}
         </IconButton>
+        <IconButton
+          aria-label='share on social media'
+          size='small'
+          onClick={handleDropdownClick}
+        >
+          <ShareIcon fontSize='small' />
+        </IconButton>
       </Box>
+      <Dropdown
+      url={`/posts/${post.id}`}
+      tags={post.tags}
+        anchorEl={anchorEl}
+        closeMenu={() => setAnchorEl(null)}
+      />
       <CreatePostModal
         post_id={post.id}
         editorRef={editorRef}
