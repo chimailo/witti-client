@@ -16,7 +16,6 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
-  SvgIcon,
   Box,
 } from '@material-ui/core';
 
@@ -27,7 +26,6 @@ import { CenteredLoading } from '../../components/Loading';
 import {Body} from '../../components/Post/Content'
 import { ROUTES } from '../../lib/constants';
 import { Post } from '../../types';
-import { QuoteIcon } from '../../components/svg';
 import { useAuth } from '../../lib/hooks/user';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -220,24 +218,7 @@ function FeaturedPostsCarousel({ posts }: { posts: Post[] }) {
     >
       {posts.map((post) => (
         <>
-          <Typography
-            color='secondary'
-            component='p'
-            align='center'
-            paragraph
-            style={{ padding: theme.spacing(0, 2) }}
-          >
-            <SvgIcon
-              component={QuoteIcon}
-              viewBox='0 0 508 508'
-              color='secondary'
-              fontSize='small'
-              style={{
-                marginRight: theme.spacing(2),
-              }}
-            />
-            <Body post={post.body} dark />
-          </Typography>
+          <Body post={post.body} dark />
           <Typography
             variant='subtitle2'
             align='right'
