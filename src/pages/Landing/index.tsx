@@ -189,7 +189,7 @@ export default function Landing() {
                   An error occured
                 </Typography>
               )}
-              {posts && <FeaturedPostsCarousel posts={posts} />}
+              {/* {posts && <FeaturedPostsCarousel posts={posts} />} */}
             </Container>
           </section>
         </Box>
