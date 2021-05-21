@@ -189,7 +189,7 @@ export default function Landing() {
                   An error occured
                 </Typography>
               )}
-              {/* {posts && <FeaturedPostsCarousel posts={posts} />} */}
+              {posts && <FeaturedPostsCarousel posts={posts} />}
             </Container>
           </section>
         </Box>
@@ -225,8 +225,7 @@ function FeaturedPostsCarousel({ posts }: { posts: Post[] }) {
             color='secondary'
             component='p'
           >
-            - { // @ts-expect-error
-            post.author.profile.username}
+            - {post.author.username}
           </Typography>
         </>
       ))}
