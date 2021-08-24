@@ -2,16 +2,20 @@ import React from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useTheme } from '@material-ui/core/styles';
-import { useMediaQuery, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@material-ui/core';
-import { KEYS } from '../../lib/constants';
-import {ProfileForm} from '../../components/forms';
-import { Profile, User } from "../../types";
-import { useSetProfile } from '../../lib/hooks/user';
 import {
-  validateName,
-  validateUsername,
-} from '../../lib/validators';
-
+  useMediaQuery,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Button,
+} from '@material-ui/core';
+import { KEYS } from '../../lib/constants';
+import ProfileForm from '../forms/Profile';
+import { Profile, User } from '../../../types';
+import { useSetProfile } from '../../lib/hooks/user';
+import { validateName, validateUsername } from '../../lib/validators';
 
 // const useStyles = makeStyles((theme: Theme) =>
 //   createStyles({
@@ -53,7 +57,7 @@ import {
 
 type EditProfileModalProps = {
   isOpen: boolean;
-  user: User
+  user: User;
   handleClose: () => void;
 };
 
@@ -61,21 +65,21 @@ export default function EditProfileModal(props: EditProfileModalProps) {
   // const classes = useStyles();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
-  const {mutate} = useSetProfile();
+  const { mutate } = useSetProfile();
 
-  const {isOpen, user, handleClose} = props
+  const { isOpen, user, handleClose } = props;
 
   const initialValues: Omit<Profile, 'created_on' | 'updated_on'> = {
     name: user?.profile.name || '',
     username: user?.profile.username || '',
     dob: user?.profile.dob || new Date(),
     avatar: user?.profile.avatar || '',
-    bio: user?.profile.bio || ''
-  }
+    bio: user?.profile.bio || '',
+  };
 
-  const saveProfile = (values: Omit<Profile, "created_on" | "updated_on">) => {
-    console.log(values)
-    mutate({values, cacheKey: KEYS.USER_PROFILE})
+  const saveProfile = (values: Omit<Profile, 'created_on' | 'updated_on'>) => {
+    console.log(values);
+    mutate({ values, cacheKey: KEYS.USER_PROFILE });
     handleClose();
   };
 
@@ -97,19 +101,26 @@ export default function EditProfileModal(props: EditProfileModalProps) {
         onSubmit={async (values) => saveProfile(values)}
       >
         {(props) => (
-        <>
-          <DialogContent>
-            <DialogContentText><ProfileForm formik={props} />
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button color='primary' variant='contained' style={{color: 'white'}} onClick={() => saveProfile(props.values)}>
-              update profile
-            </Button>
-          </DialogActions>
-        </>)}
+          <>
+            <DialogContent>
+              <DialogContentText>
+                <ProfileForm formik={props} />
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>Cancel</Button>
+              <Button
+                color='primary'
+                variant='contained'
+                style={{ color: 'white' }}
+                onClick={() => saveProfile(props.values)}
+              >
+                update profile
+              </Button>
+            </DialogActions>
+          </>
+        )}
       </Formik>
     </Dialog>
-  )
+  );
 }

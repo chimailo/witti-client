@@ -22,7 +22,7 @@ export const validateUsername = () =>
       message: 'A user with that username already exists',
       test: async (value) => {
         const res = await axios.post(
-          `${process.env.REACT_APP_API_URL}/profile/check-username`,
+          `${process.env.NEXT_PUBLIC_API_URL}/profile/check-username`,
           { username: value }
         );
         return res.data.res;
@@ -42,7 +42,7 @@ export const validateEmail = () =>
       message: 'A user with that email already exists',
       test: async (value) => {
         const res = await axios.post(
-          `${process.env.REACT_APP_API_URL}/users/check-email`,
+          `${process.env.NEXT_PUBLIC_API_URL}/users/check-email`,
           { email: value }
         );
         return res.data.res;
@@ -74,7 +74,7 @@ export const validateTag = () =>
       message: 'That tag already exists',
       test: async (value) => {
         const res = await axios.post(
-          `${process.env.REACT_APP_API_URL}/tags/check`,
+          `${process.env.NEXT_PUBLIC_API_URL}/tags/check`,
           { tag: value }
         );
         return res.data.res;

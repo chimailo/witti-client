@@ -6,9 +6,15 @@ import { ItalicButton, BoldButton } from '@draft-js-plugins/buttons';
 import '@draft-js-plugins/inline-toolbar/lib/plugin.css';
 import CharCounter from './plugins/charCounter';
 import editorStyles from './styles/Editor.module.css';
-import {undoPlugin, linkPlugin, linkifyPlugin, inlineToolbarPlugin, emojiPlugin} from './setup'
+import {
+  undoPlugin,
+  linkPlugin,
+  linkifyPlugin,
+  inlineToolbarPlugin,
+  emojiPlugin,
+} from './setup';
 import { useSetProfile } from '../../lib/hooks/user';
-import { Profile } from '../../types';
+import { Profile } from '../../../types';
 
 const { EmojiSuggestions, EmojiSelect } = emojiPlugin;
 const { InlineToolbar } = inlineToolbarPlugin;
@@ -22,9 +28,15 @@ const plugins = [
   undoPlugin,
 ];
 
-export default function RichEditor({user, cacheKey}: {user: Omit<Profile, 'created_on' | 'updated_on'>, cacheKey: string}) {
+export default function RichEditor({
+  user,
+  cacheKey,
+}: {
+  user: Omit<Profile, 'created_on' | 'updated_on'>;
+  cacheKey: string;
+}) {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  const {mutate} = useSetProfile();
+  const { mutate } = useSetProfile();
 
   const charLength = editorState.getCurrentContent().getPlainText().length;
   const hasText = editorState.getCurrentContent().hasText();
@@ -34,19 +46,19 @@ export default function RichEditor({user, cacheKey}: {user: Omit<Profile, 'creat
 
     const contentState = editorState.getCurrentContent();
     const bio = JSON.stringify({ bio: convertToRaw(contentState) });
-    const values = {...user, bio}
-    
-    mutate({values, cacheKey});
-  }
+    const values = { ...user, bio };
 
-  setInterval(() =>  saveProfile(), 5000)
+    mutate({ values, cacheKey });
+  };
+
+  setInterval(() => saveProfile(), 5000);
 
   return (
     <>
       <Box py={2}>
         <div className={editorStyles.editor}>
           <Editor
-          placeholder=''
+            placeholder=''
             editorState={editorState}
             onChange={setEditorState}
             plugins={plugins}

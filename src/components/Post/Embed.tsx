@@ -1,10 +1,10 @@
 import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
 import { convertFromRaw } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
-import { Box, Avatar, Link, Typography } from '@material-ui/core';
+import { Box, Avatar, Typography } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { Post } from '../../types';
+import Link from '../Link';
+import { Post } from '../../../types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,8 +26,7 @@ export default function EmbedPost({ post }: { post: Post['parent'] }) {
     <Link
       underline='none'
       color='textPrimary'
-      to={`/posts/${post.id}`}
-      component={RouterLink}
+      href={`/posts/${post.id}`}
       className={classes.embed}
     >
       <Avatar

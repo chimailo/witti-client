@@ -2,7 +2,7 @@ import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles, Theme, createStyles } from '@material-ui/core';
 import { PostHeader, PostContent, PostMeta } from '../../components/Post';
-import { Post } from '../../types';
+import { Post } from '../../../types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

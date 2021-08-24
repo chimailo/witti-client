@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import { Box, Avatar, Link, Typography, IconButton } from '@material-ui/core';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { Box, Avatar, Typography, IconButton } from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Dropdown from '../dropdown/PostCard';
-import { Post } from '../../types';
+import Link from '../Link';
+import { Post } from '../../../types';
 import { useDeletePost } from '../../lib/hooks/posts';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -44,8 +44,7 @@ export default function PostHeader({ post, page }: PostHeaderProps) {
       <Box display='flex' alignItems='center' mb={2}>
         <Link
           underline='none'
-          to={`/${post.author.username}`}
-          component={RouterLink}
+          href={`/user/${post.author.username}`}
           className={classes.link}
         >
           <Avatar

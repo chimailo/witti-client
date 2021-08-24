@@ -11,10 +11,12 @@ import {
   APIError,
   InfiniteNotificationResponse,
   Notification,
-} from '../../types';
+} from '../../../types';
+import { getToken } from '../utils';
 
 export function useNotificationCount() {
-  localStorage.token && setAuthToken(localStorage.token);
+  const token = getToken();
+  if (token) setAuthToken(token);
 
   return useQuery<{ count: number }, AxiosError<APIError>>(
     KEYS.NOTIFS_COUNT,
@@ -23,15 +25,16 @@ export function useNotificationCount() {
         `/notifications/count`
       );
       return res.data;
-    },
-    {
-      refetchInterval: REFETCH_INTERVAL,
     }
+    // {
+    //   refetchInterval: REFETCH_INTERVAL,
+    // }
   );
 }
 
 export function useInfiniteNotifications() {
-  localStorage.token && setAuthToken(localStorage.token);
+  const token = getToken();
+  if (token) setAuthToken(token);
 
   return useInfiniteQuery<InfiniteNotificationResponse, AxiosError<APIError>>(
     KEYS.NOTIFS,
@@ -48,7 +51,8 @@ export function useInfiniteNotifications() {
 }
 
 export function useRemoveNotification() {
-  localStorage.token && setAuthToken(localStorage.token);
+  const token = getToken();
+  if (token) setAuthToken(token);
   const queryClient = useQueryClient();
 
   return useMutation(

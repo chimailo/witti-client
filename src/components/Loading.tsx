@@ -1,7 +1,5 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 import Box, { BoxProps } from '@material-ui/core/Box';
-import Button, { ButtonProps } from '@material-ui/core/Button';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import CircularProgress, {
   CircularProgressProps,
@@ -24,12 +22,12 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export function Loading(props: CircularProgressProps) {
+export default function CircularLoading(props: CircularProgressProps) {
   const classes = useStyles();
 
   return (
     <Box
-      py={4}
+      py={2}
       position='relative'
       display='inherit'
       justifyContent='center'
@@ -38,7 +36,7 @@ export function Loading(props: CircularProgressProps) {
       <CircularProgress
         variant='determinate'
         className={classes.bottom}
-        size={props.size || 24}
+        size={props.size || 16}
         thickness={4}
         {...props}
         value={100}
@@ -50,65 +48,10 @@ export function Loading(props: CircularProgressProps) {
         classes={{
           circle: classes.circle,
         }}
-        size={props.size || 24}
+        size={props.size || 16}
         thickness={4}
         {...props}
       />
     </Box>
   );
 }
-
-interface CenteredLoadingProps extends BoxProps {
-  size?: number;
-}
-
-export const CenteredLoading = (props: CenteredLoadingProps) => (
-  <Box display='flex' alignItems='center' justifyContent='center' {...props}>
-    <Loading size={props.size} />
-  </Box>
-);
-
-interface LoadMoreProps extends ButtonProps {
-  iconSize: number;
-  resource?: string;
-  hasNextPage?: boolean;
-  isFetchingNextPage: boolean;
-  fetchNextPage: () => void;
-}
-
-export default React.forwardRef<HTMLButtonElement | null, LoadMoreProps>(
-  (props, ref) => {
-    const { pathname } = useLocation();
-    const {
-      iconSize,
-      resource,
-      hasNextPage,
-      isFetchingNextPage,
-      fetchNextPage,
-    } = props;
-
-    return (
-      <>
-        {isFetchingNextPage ? (
-          <Button
-            endIcon={<Loading size={iconSize} />}
-            disabled={isFetchingNextPage}
-            {...props}
-          >
-            Loading more...
-          </Button>
-        ) : hasNextPage ? (
-          <Button ref={ref} onClick={() => fetchNextPage()} {...props}>
-            Load more {resource}
-          </Button>
-        ) : pathname.includes('messages') ? (
-          <Button disabled={!hasNextPage} {...props}></Button>
-        ) : (
-          <Button disabled={!hasNextPage} {...props}>
-            No more {resource}
-          </Button>
-        )}
-      </>
-    );
-  }
-);

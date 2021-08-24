@@ -1,18 +1,17 @@
 import React, { useRef } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
 import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 
+import CircularLoading from '../Loading';
+import Link from '../Link';
 import LoadMore from '../../components/Loading';
 import useIntersectionObserver from '../../lib/hooks/useIntersectionObserver';
-import { CenteredLoading } from '../Loading';
 import { KEYS } from '../../lib/constants';
 import { useFollowTag, useTagsToFollow } from '../../lib/hooks/user';
-import { Tag } from '../../types';
+import { Tag } from '../../../types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -84,7 +83,7 @@ export default function TopTags() {
         </Typography>
         <Divider />
         {isLoading ? (
-          <CenteredLoading />
+          <CircularLoading />
         ) : isError ? (
           <Typography align='center' gutterBottom>
             An error occured, please try again.
@@ -96,11 +95,7 @@ export default function TopTags() {
                 {page.data.map((tag) => (
                   <React.Fragment key={tag.id}>
                     <div className={classes.root}>
-                      <Link
-                        underline='none'
-                        to={`/tags/${tag.name}`}
-                        component={RouterLink}
-                      >
+                      <Link underline='none' href={`/tags/${tag.name}`}>
                         <Typography noWrap variant='subtitle1'>
                           #{tag.name}
                         </Typography>
@@ -131,7 +126,7 @@ export default function TopTags() {
               </React.Fragment>
             ))}
             <LoadMore
-              fullWidth
+              // fullWidth
               resource='tags'
               iconSize={16}
               ref={loadMoreRef}

@@ -1,15 +1,11 @@
-import { useState } from "react";
-import { FormikProps } from "formik";
+import { useState } from 'react';
+import { FormikProps } from 'formik';
 import DateFnsUtils from '@date-io/date-fns';
 import { TextField } from '@material-ui/core';
-import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
-import {
-  createStyles,
-  makeStyles,
-  Theme,
-} from '@material-ui/core/styles';
+import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 // import { ProfileEditor } from "../Editor";
-import { Profile } from "../../types";
+import { Profile } from '../../../types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -23,10 +19,14 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function ProfileForm({formik}: {formik: FormikProps<Omit<Profile, "created_on" | "updated_on">>}) {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null)
+export default function ProfileForm({
+  formik,
+}: {
+  formik: FormikProps<Omit<Profile, 'created_on' | 'updated_on'>>;
+}) {
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const classes = useStyles();
-  const {values, touched, errors, handleChange, handleBlur} = formik
+  const { values, touched, errors, handleChange, handleBlur } = formik;
 
   const handleDateChange = (date: Date | null) => setSelectedDate(date);
 
@@ -52,9 +52,7 @@ export default function ProfileForm({formik}: {formik: FormikProps<Omit<Profile,
         value={values.username}
         onChange={handleChange}
         onBlur={handleBlur}
-        helperText={
-          errors?.username && touched?.username && errors?.username
-        }
+        helperText={errors?.username && touched?.username && errors?.username}
         error={!!(errors?.username && touched?.username)}
         fullWidth
       />
@@ -63,7 +61,7 @@ export default function ProfileForm({formik}: {formik: FormikProps<Omit<Profile,
           fullWidth
           name='dob'
           label='Birthday'
-          format="MM/dd"
+          format='MM/dd'
           className={classes.field}
           value={selectedDate}
           onBlur={handleBlur}
@@ -72,7 +70,7 @@ export default function ProfileForm({formik}: {formik: FormikProps<Omit<Profile,
         />
       </MuiPickersUtilsProvider>
       <TextField
-      multiline
+        multiline
         name='bio'
         label='About you'
         type='bio'
@@ -81,13 +79,11 @@ export default function ProfileForm({formik}: {formik: FormikProps<Omit<Profile,
         value={values.bio}
         onChange={handleChange}
         onBlur={handleBlur}
-        helperText={
-          errors?.bio && touched?.bio && errors?.bio
-        }
+        helperText={errors?.bio && touched?.bio && errors?.bio}
         error={!!(touched?.bio && errors?.bio)}
         fullWidth
       />
       {/* <ProfileEditor user={user!.profile} cacheKey={cacheKey} /> */}
     </form>
-  )
+  );
 }

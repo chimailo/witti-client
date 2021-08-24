@@ -1,10 +1,11 @@
 import React from 'react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import { convertFromRaw } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
-import { Box, Link, Typography } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
+import Link from '../Link';
 import EmbedPost from './Embed';
-import { Post } from '../../types';
+import { Post } from '../../../types';
 
 interface PostContentProps {
   post: Post;
@@ -12,7 +13,7 @@ interface PostContentProps {
 }
 
 export default function PostContent({ post, postPage }: PostContentProps) {
-  const { pathname } = useLocation<string>();
+  const router = useRouter();
 
   return (
     <>
@@ -21,11 +22,11 @@ export default function PostContent({ post, postPage }: PostContentProps) {
       ) : postPage ? (
         <Body post={post.body} postPage />
       ) : (
-        <Link underline='none' to={`/posts/${post.id}`} component={RouterLink}>
+        <Link underline='none' href={`/posts/${post.id}`}>
           <Body post={post.body} />
         </Link>
       )}
-      {post.parent && !pathname.split('/').includes('posts') && (
+      {post.parent && !router.pathname.split('/').includes('posts') && (
         <EmbedPost post={post.parent} />
       )}
       <Box flexWrap='wrap' display='flex' alignItems='center' mb={2}>
@@ -33,8 +34,7 @@ export default function PostContent({ post, postPage }: PostContentProps) {
           <Link
             color='textSecondary'
             key={tag.id}
-            to={`/tags/${tag.name}`}
-            component={RouterLink}
+            href={`/tags/${tag.name}`}
             style={{ marginRight: 8 }}
           >{`#${tag.name}`}</Link>
         ))}
@@ -43,7 +43,15 @@ export default function PostContent({ post, postPage }: PostContentProps) {
   );
 }
 
-export function Body({ post, postPage, dark }: { post: string; postPage?: boolean; dark?: boolean }) {
+export function Body({
+  post,
+  postPage,
+  dark,
+}: {
+  post: string;
+  postPage?: boolean;
+  dark?: boolean;
+}) {
   const options = {
     inlineStyles: {
       ITALIC: {
@@ -62,13 +70,13 @@ export function Body({ post, postPage, dark }: { post: string; postPage?: boolea
           },
           style: {
             color: '#12aac9',
-            textDecoration: 'none'
+            textDecoration: 'none',
           },
         };
       }
     },
   };
-  
+
   return post.match('({"blocks":)') ? (
     <Typography
       color={dark ? 'secondary' : 'textPrimary'}

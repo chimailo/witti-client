@@ -1,12 +1,13 @@
-import { Link as RouterLink } from 'react-router-dom';
+import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Paper from '@material-ui/core/Paper';
-import { Link, Typography, Button, Divider, Box } from '@material-ui/core';
+import { Typography, Button, Divider, Box } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { CenteredLoading } from '../Loading';
+import CircularLoading from '../Loading';
+import Link from '../Link';
 import { KEYS } from '../../lib/constants';
 import { useFollowUser, useToFollow } from '../../lib/hooks/user';
 
@@ -47,7 +48,7 @@ export default function WhoToFollow() {
       <Divider />
       <List>
         {isLoading ? (
-          <CenteredLoading />
+          <CircularLoading />
         ) : isError ? (
           <ListItem>
             <ListItemText primary='An unexpected error occured, please try again' />
@@ -64,8 +65,7 @@ export default function WhoToFollow() {
               >
                 <Link
                   underline='none'
-                  to={`/${user.profile.username}`}
-                  component={RouterLink}
+                  href={`/${user.profile.username}`}
                   className={classes.link}
                 >
                   <Avatar

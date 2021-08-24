@@ -5,6 +5,7 @@ import {
   useQuery,
   useQueryClient,
 } from 'react-query';
+import { getToken } from '../utils';
 import { setAuthToken } from '../../lib/axiosConfig';
 import {
   APIError,
@@ -13,10 +14,11 @@ import {
   Post,
   Tag,
   InfinitePostPages,
-} from '../../types';
+} from '../../../types';
 
 export function usePost(post_id: number) {
-  localStorage.token && setAuthToken(localStorage.token);
+  const token = getToken();
+  if (token) setAuthToken(token);
 
   return useQuery<Post, AxiosError<APIError>>(`/posts/${post_id}`, async () => {
     const res: AxiosResponse<Post> = await axios.get(`/posts/${post_id}`);
@@ -25,7 +27,8 @@ export function usePost(post_id: number) {
 }
 
 export function useInfinitePosts(key: string | any[], url: string) {
-  localStorage.token && setAuthToken(localStorage.token);
+  const token = getToken();
+  if (token) setAuthToken(token);
 
   return useInfiniteQuery<InfinitePostResponse, AxiosError<APIError>>(
     key,
@@ -42,7 +45,8 @@ export function useInfinitePosts(key: string | any[], url: string) {
 }
 
 export function useCreatePost() {
-  localStorage.token && setAuthToken(localStorage.token);
+  const token = getToken();
+  if (token) setAuthToken(token);
   const queryClient = useQueryClient();
 
   return useMutation(
@@ -98,7 +102,8 @@ export function useCreatePost() {
 }
 
 export function useCreateComment() {
-  localStorage.token && setAuthToken(localStorage.token);
+  const token = getToken();
+  if (token) setAuthToken(token);
   const queryClient = useQueryClient();
 
   return useMutation(
@@ -122,7 +127,8 @@ export function useCreateComment() {
 }
 
 export function useDeletePost() {
-  localStorage.token && setAuthToken(localStorage.token);
+  const token = getToken();
+  if (token) setAuthToken(token);
   const queryClient = useQueryClient();
 
   return useMutation(
@@ -141,7 +147,8 @@ export function useDeletePost() {
 }
 
 export function useUpdatePostLike() {
-  localStorage.token && setAuthToken(localStorage.token);
+  const token = getToken();
+  if (token) setAuthToken(token);
   const queryClient = useQueryClient();
 
   return useMutation(
@@ -195,7 +202,8 @@ export function useUpdatePostLike() {
 }
 
 export function useTag(name: string) {
-  localStorage.token && setAuthToken(localStorage.token);
+  const token = getToken();
+  if (token) setAuthToken(token);
 
   return useQuery<Tag, AxiosError<APIError>>(['tag', name], async () => {
     const res: AxiosResponse<Tag> = await axios.get(`/tags?name=${name}`);
@@ -204,7 +212,8 @@ export function useTag(name: string) {
 }
 
 export function useAllTags() {
-  localStorage.token && setAuthToken(localStorage.token);
+  const token = getToken();
+  if (token) setAuthToken(token);
 
   return useQuery<Pick<Tag, 'id' | 'name'>[], AxiosError<APIError>>(
     `all-tags`,
@@ -218,7 +227,8 @@ export function useAllTags() {
 }
 
 export function useAddTag() {
-  localStorage.token && setAuthToken(localStorage.token);
+  const token = getToken();
+  if (token) setAuthToken(token);
   const queryClient = useQueryClient();
 
   return useMutation(

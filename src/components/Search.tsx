@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import debounce from 'lodash.debounce';
 import InputBase from '@material-ui/core/InputBase';
@@ -14,8 +14,8 @@ import {
   ListItemText,
   useMediaQuery,
 } from '@material-ui/core';
-import { APIError, Search } from '../types';
-import { CenteredLoading } from './Loading';
+import CircularLoading from './Loading';
+import { APIError, Search } from '../../types';
 import { setAuthToken } from '../lib/axiosConfig';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -142,12 +142,12 @@ interface SuggestionProps {
 }
 
 function Suggestions({ data, error, isError, isLoading }: SuggestionProps) {
-  const history = useHistory();
+  const router = useRouter();
 
   return (
     <List disablePadding>
       {isLoading ? (
-        <CenteredLoading />
+        <CircularLoading />
       ) : isError ? (
         <ListItem>
           <ListItemText primary={error?.response?.data.message} />
@@ -160,7 +160,7 @@ function Suggestions({ data, error, isError, isLoading }: SuggestionProps) {
               button
               divider
               alignItems='flex-start'
-              onClick={() => history.push(`/tags/${tag.name}`)}
+              onClick={() => router.push(`/tags/${tag.name}`)}
             >
               <ListItemText primary={`#${tag.name}`}></ListItemText>
             </ListItem>
@@ -171,7 +171,7 @@ function Suggestions({ data, error, isError, isLoading }: SuggestionProps) {
               button
               divider
               alignItems='flex-start'
-              onClick={() => history.push(`/${user.profile.username}`)}
+              onClick={() => router.push(`/${user.profile.username}`)}
             >
               <ListItemAvatar>
                 <Avatar alt={user.profile.name} src={user.profile.avatar} />

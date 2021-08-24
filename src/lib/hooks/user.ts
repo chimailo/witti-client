@@ -18,30 +18,24 @@ import {
   InfiniteTagPages,
   Tag,
   AuthParams,
-} from '../../types';
+} from '../../../types';
+import { getToken } from '../utils';
 
 export function useSignup() {
-  return useMutation(
-    async (values: AuthParams) => {
-      const { email, password, name, username } = values;
+  return useMutation(async (values: AuthParams) => {
+    const { id, email, name, username } = values;
 
-      const { data }: AxiosResponse<{ token: string }> = await axios.post(
-        '/users/register',
-        JSON.stringify({ email, password, name, username })
-      );
-      return data;
-    },
-    {
-      onSuccess: ({ token }) => localStorage.setItem('token', token),
-      onError: (error: AxiosError<APIError>) =>
-        console.log(error.response?.data),
-    }
-  );
+    const { data }: AxiosResponse<{ token: string }> = await axios.post(
+      '/users/register',
+      JSON.stringify({ id, email, name, username })
+    );
+    return data;
+  });
 }
 
 export function useLogin() {
   return useMutation(
-    async (values: Pick<AuthParams, 'email' | 'password'>) => {
+    async (values: { email: string; password: string }) => {
       const { data }: AxiosResponse<{ token: string }> = await axios.post(
         '/users/login',
         JSON.stringify(values)
@@ -57,7 +51,7 @@ export function useLogin() {
 }
 
 export function useAuth() {
-  const token = localStorage.getItem('token');
+  const token = getToken();
   if (token) setAuthToken(token);
 
   return useQuery<User, APIError>(
@@ -73,7 +67,7 @@ export function useAuth() {
 }
 
 export function useUser(username: string) {
-  const token = localStorage.getItem('token');
+  const token = getToken();
   if (token) setAuthToken(token);
 
   return useQuery<User, AxiosError<APIError>>(
@@ -89,44 +83,45 @@ export function useUser(username: string) {
 
 export function useSetProfile() {
   const queryClient = useQueryClient();
-  const token = localStorage.getItem('token');
+  const token = getToken();
 
   if (token) setAuthToken(token);
 
   return useMutation(
     async ({
-      values
+      values,
     }: {
-      values: Omit<Profile, 'created_on' | 'updated_on'>; cacheKey: string
+      values: Omit<Profile, 'created_on' | 'updated_on'>;
+      cacheKey: string;
     }) => {
-    console.log(values.dob)
-    const res: AxiosResponse<Profile> = await axios.put(
-      '/profile',
-      // @ts-expect-error
-      {...values, dob: new Date(values.dob)}
-    )
-    return res.data
-  },
-  {
-    onMutate: ({cacheKey, values}) => 
-      // @ts-expect-error
-      queryClient.setQueryData<Profile>(cacheKey, oldData => ({
-        ...oldData,
-        name: values.name,
-        username: values.username,
-        bio: values.bio,
-        dob: values.dob,
-        avatar: values.avatar,
-      })),
-    onError: (error: AxiosError<APIError>) => {
-      console.log(error)
+      console.log(values.dob);
+      const res: AxiosResponse<Profile> = await axios.put(
+        '/profile',
+        // @ts-expect-error
+        { ...values, dob: new Date(values.dob) }
+      );
+      return res.data;
+    },
+    {
+      onMutate: ({ cacheKey, values }) =>
+        // @ts-expect-error
+        queryClient.setQueryData<Profile>(cacheKey, (oldData) => ({
+          ...oldData,
+          name: values.name,
+          username: values.username,
+          bio: values.bio,
+          dob: values.dob,
+          avatar: values.avatar,
+        })),
+      onError: (error: AxiosError<APIError>) => {
+        console.log(error);
+      },
     }
-  }
-  )
+  );
 }
 
 export function useToFollow() {
-  const token = localStorage.getItem('token');
+  const token = getToken();
   if (token) setAuthToken(token);
 
   return useQuery<
@@ -135,9 +130,8 @@ export function useToFollow() {
   >(KEYS.TO_FOLLOW, async () => {
     const {
       data,
-    }: AxiosResponse<
-      Pick<User, 'id' | 'profile' | 'isFollowing'>[]
-    > = await axios.get(`/users/to-follow`);
+    }: AxiosResponse<Pick<User, 'id' | 'profile' | 'isFollowing'>[]> =
+      await axios.get(`/users/to-follow`);
     return data;
   });
 }

@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { useQueryClient } from 'react-query';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { useRouter } from 'next/router';
+import { useQueryClient } from 'react-query';
 
-import Sidebar from './Sidebar';
-import { User } from '../types';
-import { KEYS } from '../lib/constants';
 import Search from './Search';
+import Sidebar from './Sidebar';
+import { User } from '../../types';
+import { KEYS } from '../lib/constants';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -57,25 +57,24 @@ type HeaderProps = {
 export default function Header(props: HeaderProps) {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const classes = useStyles();
-  const history = useHistory();
+  const router = useRouter();
   const queryClient = useQueryClient();
   const auth = queryClient.getQueryData<User>(KEYS.AUTH);
 
   const { user, title, search, back, avatar, meta } = props;
 
-  const toggleDrawer = (open: boolean) => (
-    event: React.KeyboardEvent | React.MouseEvent
-  ) => {
-    if (
-      event.type === 'keydown' &&
-      ((event as React.KeyboardEvent).key === 'Tab' ||
-        (event as React.KeyboardEvent).key === 'Shift')
-    ) {
-      return;
-    }
+  const toggleDrawer =
+    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event.type === 'keydown' &&
+        ((event as React.KeyboardEvent).key === 'Tab' ||
+          (event as React.KeyboardEvent).key === 'Shift')
+      ) {
+        return;
+      }
 
-    setDrawerOpen(open);
-  };
+      setDrawerOpen(open);
+    };
 
   return (
     <Toolbar classes={{ root: classes.toolbar }} disableGutters>
@@ -84,7 +83,7 @@ export default function Header(props: HeaderProps) {
           <IconButton
             size='small'
             aria-label='go back'
-            onClick={() => history.goBack()}
+            onClick={() => router.back()}
           >
             <KeyboardBackspaceIcon color='primary' />
           </IconButton>
@@ -93,7 +92,7 @@ export default function Header(props: HeaderProps) {
           <IconButton
             size='small'
             aria-label='menu'
-            onClick={() => history.push(`/${auth?.profile.username}`)}
+            onClick={() => router.push(`/${auth?.profile.username}`)}
           >
             <Avatar
               alt={user ? user.profile.avatar : auth?.profile.avatar}

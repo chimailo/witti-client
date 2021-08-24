@@ -1,12 +1,11 @@
 import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import Link from '@material-ui/core/Link';
 import SvgIcon from '@material-ui/core/SvgIcon';
-import { ROUTES } from '../../lib/constants';
+import Link from '../../components/Link';
+import { HOME } from '../../lib/routes';
 
 export default function Logo({ size = 60 }: { size?: number }) {
   return (
-    <Link to={ROUTES.HOME} component={RouterLink}>
+    <Link href={HOME}>
       <SvgIcon
         viewBox='0 0 192 116'
         color='secondary'

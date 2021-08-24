@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { useQueryClient } from 'react-query';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
-import MuiLink from '@material-ui/core/Link';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Menu from '@material-ui/core/Menu';
@@ -12,10 +10,14 @@ import Typography from '@material-ui/core/Typography';
 import EditIcon from '@material-ui/icons/Edit';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
-import EditProfileModal from '../modals/EditProfile';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { KEYS, ROUTES } from '../../lib/constants';
-import { User } from '../../types';
+
+import EditProfileModal from '../modals/EditProfile';
+import Link from '../Link';
+import { logout } from '../../lib/utils';
+import { KEYS } from '../../lib/constants';
+import { useAuth } from '../../lib/auth-context';
+import { User } from '../../../types';
 
 type MenuProps = {
   user?: User;
@@ -64,21 +66,19 @@ export default function SidebarMenu({
   anchorEl,
   handleClose,
 }: MenuProps) {
-  const [isOpen, setModalOpen] = useState(false)
+  const [isOpen, setModalOpen] = useState(false);
   const classes = useStyles();
-  const history = useHistory();
   const queryClient = useQueryClient();
+  const { handleLogout: onLogout } = useAuth();
 
   const handleLogout = () => {
+    onLogout();
     queryClient.removeQueries(KEYS.AUTH);
-    localStorage.removeItem('token');
     handleClose();
-    history.push(ROUTES.LOGIN);
   };
 
   return (
     <>
-    <div>
       <Menu
         id='user-menu'
         classes={{ paper: classes.menuPaper }}
@@ -113,24 +113,23 @@ export default function SidebarMenu({
         </div>
         <Divider className={classes.menuDivider} />
         <MenuItem onClick={handleClose} classes={{ root: classes.menuItem }}>
-          <MuiLink
+          <Link
             color='inherit'
             underline='none'
-            component={RouterLink}
             className={classes.link}
-            to={`/${user?.profile.username}`}
+            href={`/user/${user?.profile.username}`}
           >
             <ListItemIcon className={classes.listItemIcon}>
               <PersonOutlineIcon fontSize='small' />
             </ListItemIcon>
             <ListItemText primary='Profile' />
-          </MuiLink>
+          </Link>
         </MenuItem>
         <MenuItem
           classes={{ root: classes.menuItem }}
           onClick={() => {
-            handleClose()
-            setModalOpen(true)
+            handleClose();
+            setModalOpen(true);
           }}
         >
           <ListItemIcon className={classes.listItemIcon}>
@@ -139,26 +138,31 @@ export default function SidebarMenu({
           <ListItemText primary='Edit Profile' />
         </MenuItem>
         <MenuItem onClick={handleClose} classes={{ root: classes.menuItem }}>
-          <MuiLink
+          <Link
             color='inherit'
             underline='none'
-            component={RouterLink}
             className={classes.link}
-            to={`/${user?.profile.username}/settings`}
+            href={`/user/${user?.profile.username}/settings`}
           >
             <ListItemIcon className={classes.listItemIcon}>
               <SettingsOutlinedIcon fontSize='small' />
             </ListItemIcon>
             <ListItemText primary='Settings' />
-          </MuiLink>
+          </Link>
         </MenuItem>
         <Divider className={classes.menuDivider} />
-        <MenuItem onClick={handleLogout} classes={{ root: classes.menuItem }}>
+        <MenuItem
+          onClick={() => logout(handleLogout)}
+          classes={{ root: classes.menuItem }}
+        >
           Logout
         </MenuItem>
       </Menu>
-    </div>
-    <EditProfileModal isOpen={isOpen} user={user!} handleClose={() => setModalOpen(false)} />
+      <EditProfileModal
+        isOpen={isOpen}
+        user={user!}
+        handleClose={() => setModalOpen(false)}
+      />
     </>
   );
 }

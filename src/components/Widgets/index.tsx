@@ -1,14 +1,15 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import TopTags from './TopTags';
 import WhoToFollow from './WhoToFollow';
 
 export default function Widgets() {
-  const { pathname } = useLocation<{ pathname: string }>();
+  const router = useRouter();
+  console.log(router.route);
 
   return (
     <>
-      {!pathname.split('/').includes('explore') && <TopTags />}
+      {!router.route.split('/').includes('explore') && <TopTags />}
       <WhoToFollow />
     </>
   );

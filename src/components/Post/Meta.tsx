@@ -7,7 +7,7 @@ import ModeCommentOutlinedIcon from '@material-ui/icons/ModeCommentOutlined';
 import ShareIcon from '@material-ui/icons/Share';
 import CreatePostModal from '../modals/CreatePost';
 import Dropdown from '../dropdown/share';
-import { Post } from '../../types';
+import { Post } from '../../../types';
 import { useUpdatePostLike } from '../../lib/hooks/posts';
 
 // const useStyles = makeStyles((theme: Theme) =>
@@ -80,8 +80,8 @@ export default function PostMeta({ post, page, cacheKey }: PostMetaProps) {
         </IconButton>
       </Box>
       <Dropdown
-      url={`/posts/${post.id}`}
-      tags={post.tags}
+        url={`/posts/${post.id}`}
+        tags={post.tags}
         anchorEl={anchorEl}
         closeMenu={() => setAnchorEl(null)}
       />

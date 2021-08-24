@@ -11,9 +11,9 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import useTheme from '@material-ui/core/styles/useTheme';
 import ClearIcon from '@material-ui/icons/Clear';
 
-import {PostEditor} from '../Editor';
 import TagForm from '../forms/Tag';
-import { Tag } from '../../types';
+import { PostEditor } from '../Editor';
+import { Tag } from '../../../types';
 import { useAllTags, useAddTag } from '../../lib/hooks/posts';
 import { validateTag } from '../../lib/validators';
 
@@ -126,6 +126,7 @@ function CreatePostModal(props: CreatePostModalProps) {
   );
 }
 
+// eslint-disable-next-line react/display-name
 export default React.forwardRef<PluginEditor, CreatePostModalProps>(
   (props, ref) => {
     return <CreatePostModal editorRef={ref} {...props} />;

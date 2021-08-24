@@ -3,7 +3,7 @@ import { Box, Typography } from '@material-ui/core';
 import LoadMore from '../Loading';
 import PostCard from '../cards/PostCard';
 import useIntersectionObserver from '../../lib/hooks/useIntersectionObserver';
-import { CenteredLoading } from '../Loading';
+import CircularLoading from '../Loading';
 import { useInfinitePosts } from '../../lib/hooks/posts';
 
 interface TabPanelProps {
@@ -57,10 +57,13 @@ export default function TabChild({ url, cacheKey }: TabProps) {
     onIntersect: () => fetchNextPage(),
   });
 
+  console.log(isLoading);
+  console.log(data);
+
   return (
     <>
       {isLoading ? (
-        <CenteredLoading />
+        <CircularLoading />
       ) : isError ? (
         <Box py={4}>
           <Typography color='textSecondary' align='center'>

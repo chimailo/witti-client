@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { Link as RouterLink, useHistory } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import { convertToRaw, EditorState } from 'draft-js';
 
 import Avatar from '@material-ui/core/Avatar';
@@ -7,9 +7,9 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
 import Divider from '@material-ui/core/Divider';
-import { Link, Typography } from '@material-ui/core';
 import EmojiEmotionsOutlinedIcon from '@material-ui/icons/EmojiEmotionsOutlined';
 import RedoIcon from '@material-ui/icons/Redo';
+import Typography from '@material-ui/core/Typography';
 import UndoIcon from '@material-ui/icons/Undo';
 import { useTheme } from '@material-ui/core/styles';
 
@@ -30,10 +30,11 @@ import linkifyStyles from './styles/Linkify.module.css';
 import buttonStyles from './styles/Button.module.css';
 
 import CharCounter from './plugins/charCounter';
-import { ROUTES } from '../../lib/constants';
-import { Tag } from '../../types';
+import Link from '../Link';
+import { Tag } from '../../../types';
 import { useAuth } from '../../lib/hooks/user';
 import { useCreateComment, useCreatePost } from '../../lib/hooks/posts';
+import * as ROUTES from '../../lib/routes';
 
 const emojiPlugin = createEmojiPlugin({
   theme: emojiStyles,
@@ -100,7 +101,7 @@ function PostEditor({
 }: IProps) {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const theme = useTheme();
-  const history = useHistory<string>();
+  const router = useRouter();
 
   const { data: auth } = useAuth();
   const createPost = useCreatePost();
@@ -114,14 +115,14 @@ function PostEditor({
 
     const contentState = editorState.getCurrentContent();
     const post = JSON.stringify({ body: convertToRaw(contentState) });
-    
+
     if (post_id) {
       createComment.mutate({ post_id, post });
       closeEditor && closeEditor();
     } else {
       createPost.mutate({ post, key: cacheKey, author: auth });
       closeEditor && closeEditor();
-      history.push(ROUTES.HOME);
+      router.push(ROUTES.HOME);
     }
   };
 
@@ -144,8 +145,7 @@ function PostEditor({
             />
             <Link
               underline='none'
-              to={`/${auth?.profile.username}/profile`}
-              component={RouterLink}
+              href={`/${auth?.profile.username}/profile`}
               style={{ marginLeft: 8 }}
             >
               <Typography
@@ -181,22 +181,23 @@ function PostEditor({
             plugins={plugins}
           />
         </div>
-        {!post_id && 
-        <Box display='flex' alignItems='center' flexWrap='wrap'>
-          {selectedTags?.map((tag) => (
-            <Chip
-              key={tag.id}
-              variant='outlined'
-              size='small'
-              label={`#${tag.name}`}
-              style={{ marginRight: 8 }}
-              onDelete={() => {
-                setTags([tag, ...tags]);
-                setSelectedTags(selectedTags.filter((t) => t.id !== tag.id));
-              }}
-            />
-          ))}
-        </Box>}
+        {!post_id && (
+          <Box display='flex' alignItems='center' flexWrap='wrap'>
+            {selectedTags?.map((tag) => (
+              <Chip
+                key={tag.id}
+                variant='outlined'
+                size='small'
+                label={`#${tag.name}`}
+                style={{ marginRight: 8 }}
+                onDelete={() => {
+                  setTags([tag, ...tags]);
+                  setSelectedTags(selectedTags.filter((t) => t.id !== tag.id));
+                }}
+              />
+            ))}
+          </Box>
+        )}
         <Divider />
       </Box>
       <InlineToolbar>
@@ -236,6 +237,7 @@ function PostEditor({
   );
 }
 
+// eslint-disable-next-line react/display-name
 export default React.forwardRef<PluginEditor, IProps>((props, ref) => (
   <PostEditor editorRef={ref} {...props} />
 ));

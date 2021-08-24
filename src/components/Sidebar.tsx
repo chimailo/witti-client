@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  NavLink,
-  useHistory,
-  LinkProps as RouterLinkProps,
-} from 'react-router-dom';
+import { LinkProps } from 'next/link';
 import { useQueryClient } from 'react-query';
 import PluginEditor from '@draft-js-plugins/editor';
 
@@ -22,7 +18,6 @@ import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import SearchIcon from '@material-ui/icons/Search';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { SvgIcon } from '@material-ui/core';
 import {
   createStyles,
   Theme,
@@ -30,13 +25,18 @@ import {
   useTheme,
 } from '@material-ui/core/styles';
 import { Omit } from '@material-ui/types';
+import { SvgIcon } from '@material-ui/core';
 
 import CreatePostModal from './modals/CreatePost';
+import Link from './Link';
 import SidebarMenu from './dropdown/Sidebar';
-import { KEYS, ROUTES } from '../lib/constants';
-import { useNotificationCount } from '../lib/hooks/notifs';
-import { User } from '../types';
 import { Logo, PenIcon } from './svg';
+import { logout } from '../lib/utils';
+import { KEYS } from '../lib/constants';
+import { useNotificationCount } from '../lib/hooks/notifs';
+import { useAuth } from '../lib/auth-context';
+import { User } from '../../types';
+import * as ROUTES from '../lib/routes';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -92,15 +92,16 @@ const ListItemLink = (props: ListItemLinkProps) => {
 
   const renderLink = React.useMemo(
     () =>
-      React.forwardRef<any, Omit<RouterLinkProps, 'to'>>((itemProps, ref) => (
-        <NavLink
-          to={to}
+      // eslint-disable-next-line react/display-name
+      React.forwardRef<any, Omit<LinkProps, 'href'>>((itemProps, ref) => (
+        <Link
+          href={to}
           ref={ref}
           activeStyle={{ color: theme.palette.primary.main }}
           {...itemProps}
         />
       )),
-    [to, theme.palette.primary.main]
+    [theme.palette.primary.main, to]
   );
 
   return (
@@ -132,9 +133,9 @@ export default function Sidebar({
   const [isModalOpen, setModalOpen] = useState(false);
   const editorRef = React.useRef<PluginEditor>(null);
 
-  const history = useHistory();
   const queryClient = useQueryClient();
   const { data: notifs } = useNotificationCount();
+  const { handleLogout: onLogout } = useAuth();
 
   const classes = useStyles();
   const theme = useTheme();
@@ -149,6 +150,11 @@ export default function Sidebar({
   const handleModalOpen = () => {
     handleMenuClose();
     setModalOpen(true);
+  };
+
+  const handleLogout = () => {
+    onLogout();
+    queryClient.removeQueries(KEYS.AUTH);
   };
 
   useEffect(() => {
@@ -179,7 +185,11 @@ export default function Sidebar({
           primary='Notifications'
           to={ROUTES.NOTIFICATIONS}
           icon={
-            <Badge overlap='circle' badgeContent={notifs?.count} color='error'>
+            <Badge
+              overlap='circular'
+              badgeContent={notifs?.count}
+              color='error'
+            >
               <NotificationsNoneIcon
                 fontSize={matchesXs ? 'default' : 'large'}
               />
@@ -245,7 +255,7 @@ export default function Sidebar({
         <Hidden smUp>
           <ListItemLink
             primary='Profile'
-            to={`/${user?.profile.username}/profile`}
+            to={`/user/${user?.profile.username}/profile`}
             icon={<PersonOutlineIcon />}
           />
           <ListItemLink
@@ -255,11 +265,7 @@ export default function Sidebar({
           />
           <Divider />
           <ListItem
-            onClick={() => {
-              localStorage.removeItem('token');
-              queryClient.removeQueries(KEYS.AUTH);
-              history.push(ROUTES.LOGIN);
-            }}
+            onClick={() => logout(handleLogout)}
             className={classes.listItem}
             button
           >

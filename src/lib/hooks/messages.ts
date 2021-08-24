@@ -1,8 +1,9 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useInfiniteQuery, useMutation, useQueryClient } from 'react-query';
-import { InfiniteMessageResponse, APIError, Message } from '../../types';
+import { InfiniteMessageResponse, APIError, Message } from '../../../types';
 import { KEYS, REFETCH_INTERVAL } from '../constants';
 import { setAuthToken } from '../axiosConfig';
+import { getToken } from '../utils';
 
 type Args = {
   pages: InfiniteMessageResponse[];
@@ -10,7 +11,8 @@ type Args = {
 };
 
 export function useInfiniteMessages() {
-  localStorage.token && setAuthToken(localStorage.token);
+  const token = getToken();
+  if (token) setAuthToken(token);
 
   return useInfiniteQuery<InfiniteMessageResponse, AxiosError<APIError>>(
     KEYS.MESSAGES_KEY,
@@ -27,7 +29,8 @@ export function useInfiniteMessages() {
 }
 
 export function useInfiniteChatMessages(username: string) {
-  localStorage.token && setAuthToken(localStorage.token);
+  const token = getToken();
+  if (token) setAuthToken(token);
 
   return useInfiniteQuery<InfiniteMessageResponse, AxiosError<APIError>>(
     [KEYS.CHAT_KEY, username],
@@ -45,7 +48,8 @@ export function useInfiniteChatMessages(username: string) {
 }
 
 export function useSendMessage() {
-  localStorage.token && setAuthToken(localStorage.token);
+  const token = getToken();
+  if (token) setAuthToken(token);
   const queryClient = useQueryClient();
 
   return useMutation(
@@ -111,7 +115,8 @@ export function useSendMessage() {
 }
 
 export function useDeleteMessage() {
-  localStorage.token && setAuthToken(localStorage.token);
+  const token = getToken();
+  if (token) setAuthToken(token);
   const queryClient = useQueryClient();
 
   return useMutation(
