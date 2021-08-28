@@ -107,6 +107,7 @@ const ListItemLink = (props: ListItemLinkProps) => {
   return (
     <ListItem
       className={classes.listItem}
+      // @ts-expect-error
       component={renderLink}
       disableGutters
       {...props}

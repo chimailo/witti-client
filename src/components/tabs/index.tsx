@@ -79,7 +79,7 @@ export default function TabChild({ url, cacheKey }: TabProps) {
             </Fragment>
           ))}
           <LoadMore
-            // fullWidth
+            fullWidth
             resource='posts'
             iconSize={24}
             ref={loadMoreRef}

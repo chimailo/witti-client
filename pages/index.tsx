@@ -22,7 +22,7 @@ import {
   Box,
 } from '@material-ui/core';
 
-import hero from '../../hero.jpg';
+// import hero from '../../hero.jpg';
 import Logo from '../src/components/svg/logo';
 import { Body } from '../src/components/Post/Content';
 import { CenteredLoading } from '../src/components/Loading';
@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Home: NextPage = () => {
+const Landing: NextPage = () => {
   const classes = useStyles();
   const router = useRouter();
   const theme = useTheme();
@@ -117,7 +117,12 @@ const Home: NextPage = () => {
       ) : (
         <div className={classes.root}>
           <div className={classes.imgContainer}>
-            <Image src={hero} alt='Logo' className={classes.image} />
+            <Image
+              src='/hero.jpg'
+              alt='Logo'
+              placeholder='blur'
+              className={classes.image}
+            />
           </div>
           <AppBar color='transparent' elevation={0}>
             <Container maxWidth='md'>
@@ -176,8 +181,7 @@ const Home: NextPage = () => {
                 size='large'
                 variant='outlined'
                 color='primary'
-                component={RouterLink}
-                to={ROUTES.SIGNUP}
+                onClick={() => router.push(ROUTES.SIGNUP)}
                 style={{ margin: 'auto' }}
               >
                 Join for free.
@@ -201,7 +205,7 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Landing;
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
