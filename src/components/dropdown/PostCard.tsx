@@ -11,7 +11,7 @@ import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
 import DeleteModal from '../modals/DeletePost';
-import { User, Post } from '../../types';
+import { User, Post } from '../../../types';
 import { KEYS } from '../../lib/constants';
 import { useFollowUser } from '../../lib/hooks/user';
 

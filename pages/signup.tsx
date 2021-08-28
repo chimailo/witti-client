@@ -6,12 +6,11 @@ import * as Yup from 'yup';
 import { Paper, Typography, Grid, Box } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Alert, AlertTitle } from '@material-ui/lab';
-
-import CircularLoading from '../src/components/Loading';
 import firebase from '../src/lib/firebase';
 import Link from '../src/components/Link';
 import Logo from '../src/components/svg/logo';
 import SignupForm from '../src/components/forms/Signup';
+import { CenteredLoading } from '../src/components/Loading';
 import { setToken } from '../src/lib/utils';
 import { useAuth } from '../src/lib/auth-context';
 import {
@@ -83,7 +82,7 @@ export default function Signup() {
   if (isLoading) {
     return (
       <div className={classes.loading}>
-        <CircularLoading size={40} />
+        <CenteredLoading size={40} />
       </div>
     );
   }

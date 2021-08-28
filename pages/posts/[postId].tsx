@@ -1,5 +1,5 @@
-import { useRef, Fragment } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useRef, Fragment } from 'react';
+import { useRouter } from 'next/router';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -11,20 +11,20 @@ import {
   useTheme,
 } from '@material-ui/core/styles';
 
-import Header from '../../components/Header';
-import LoadMore from '../../components/Loading';
-import Page from '../../components/Page';
-import useIntersectionObserver from '../../lib/hooks/useIntersectionObserver';
-import { CenteredLoading } from '../../components/Loading';
+import Header from '../../src/components/Header';
+import LoadMore from '../../src/components/LoadMore';
+import Wrapper from '../../src/components/Wrapper';
+import useIntersectionObserver from '../../src/lib/hooks/useIntersectionObserver';
+import { CenteredLoading } from '../../src/components/Loading';
 import {
   PostHeader,
   PostContent,
   PostPageMeta,
   PostFooter,
   PostMeta,
-} from '../../components/Post';
-import { useAuth } from '../../lib/hooks/user';
-import { useInfinitePosts, usePost } from '../../lib/hooks/posts';
+} from '../../src/components/Post';
+import { useAuth } from '../../src/lib/hooks/user';
+import { useInfinitePosts, usePost } from '../../src/lib/hooks/posts';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -43,8 +43,14 @@ export default function PostPage() {
 
   const theme = useTheme();
   const classes = useStyles();
-  const { postId } = useParams<{ postId: string }>();
-  const { data: post, isLoading, isError, error } = usePost(parseInt(postId));
+  const router = useRouter();
+  const { postId } = router.query;
+  const {
+    data: post,
+    isLoading,
+    isError,
+    error,
+  } = usePost(parseInt(postId as string));
   const { data: user } = useAuth();
 
   const {
@@ -67,7 +73,7 @@ export default function PostPage() {
   });
 
   return (
-    <Page title='Post'>
+    <Wrapper>
       <Header back title='Post' user={user} />
       <Paper
         elevation={0}
@@ -123,7 +129,7 @@ export default function PostPage() {
                     <PostMeta
                       post={comment}
                       page={i}
-                      cacheKey={`/posts/${parseInt(postId)}/comments`}
+                      cacheKey={`/posts/${parseInt(postId as string)}/comments`}
                     />
                   </Paper>
                 </Fragment>
@@ -131,7 +137,7 @@ export default function PostPage() {
             </Fragment>
           ))}
           <LoadMore
-            fullWidth
+            // fullWidth
             resource='comments'
             iconSize={24}
             ref={loadMoreRef}
@@ -142,6 +148,6 @@ export default function PostPage() {
           />
         </>
       )}
-    </Page>
+    </Wrapper>
   );
 }

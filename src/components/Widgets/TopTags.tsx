@@ -5,10 +5,10 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 
-import CircularLoading from '../Loading';
 import Link from '../Link';
-import LoadMore from '../../components/Loading';
+import LoadMore from '../LoadMore';
 import useIntersectionObserver from '../../lib/hooks/useIntersectionObserver';
+import { CenteredLoading } from '../Loading';
 import { KEYS } from '../../lib/constants';
 import { useFollowTag, useTagsToFollow } from '../../lib/hooks/user';
 import { Tag } from '../../../types';
@@ -83,7 +83,7 @@ export default function TopTags() {
         </Typography>
         <Divider />
         {isLoading ? (
-          <CircularLoading />
+          <CenteredLoading />
         ) : isError ? (
           <Typography align='center' gutterBottom>
             An error occured, please try again.

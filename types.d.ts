@@ -30,7 +30,7 @@ export type Profile = {
 };
 
 export type User = {
-  id: number;
+  id: string;
   email: string;
   is_admin: boolean;
   is_active: boolean;
@@ -57,7 +57,7 @@ export type Post = {
   comments: number;
   tags: Tag[];
   author: {
-    id: number;
+    id: string;
     name: string;
     avatar: string;
     username: string;

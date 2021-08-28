@@ -8,8 +8,8 @@ import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined'
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import FlagOutlinedIcon from '@material-ui/icons/FlagOutlined';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { User } from '../../types';
 import { KEYS } from '../../lib/constants';
+import { User } from '../../../types';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,13 +42,8 @@ export default function DeleteMessage(props: DeleteMessageProps) {
   const queryClient = useQueryClient();
   const auth = queryClient.getQueryData<User>(KEYS.AUTH);
 
-  const {
-    anchorEl,
-    authorId,
-    closeMenu,
-    deleteMessage,
-    deleteMessageForUser,
-  } = props;
+  const { anchorEl, authorId, closeMenu, deleteMessage, deleteMessageForUser } =
+    props;
 
   return (
     <>

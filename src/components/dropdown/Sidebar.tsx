@@ -18,6 +18,7 @@ import { logout } from '../../lib/utils';
 import { KEYS } from '../../lib/constants';
 import { useAuth } from '../../lib/auth-context';
 import { User } from '../../../types';
+import * as ROUTES from '../../lib/routes';
 
 type MenuProps = {
   user?: User;
@@ -117,7 +118,7 @@ export default function SidebarMenu({
             color='inherit'
             underline='none'
             className={classes.link}
-            href={`/user/${user?.profile.username}`}
+            href={ROUTES.PROFILE}
           >
             <ListItemIcon className={classes.listItemIcon}>
               <PersonOutlineIcon fontSize='small' />
@@ -142,7 +143,7 @@ export default function SidebarMenu({
             color='inherit'
             underline='none'
             className={classes.link}
-            href={`/user/${user?.profile.username}/settings`}
+            href={ROUTES.SETTINGS}
           >
             <ListItemIcon className={classes.listItemIcon}>
               <SettingsOutlinedIcon fontSize='small' />

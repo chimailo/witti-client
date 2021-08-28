@@ -137,7 +137,8 @@ export function useToFollow() {
 }
 
 export function useInfiniteUsers(url: string) {
-  localStorage.token && setAuthToken(localStorage.token);
+  const token = getToken();
+  if (token) setAuthToken(token);
 
   return useInfiniteQuery<InfiniteUserResponse, AxiosError<APIError>>(
     url,
@@ -159,7 +160,8 @@ type Args = {
 };
 
 export function useFollowUser() {
-  localStorage.token && setAuthToken(localStorage.token);
+  const token = getToken();
+  if (token) setAuthToken(token);
   const queryClient = useQueryClient();
 
   return useMutation(
@@ -167,7 +169,7 @@ export function useFollowUser() {
       user_id,
       follow,
     }: {
-      user_id: number;
+      user_id: string;
       post_id?: number;
       key: string | any[];
       pageIndex?: number;
@@ -279,7 +281,8 @@ export function useFollowUser() {
 }
 
 export function useTagsToFollow() {
-  localStorage.token && setAuthToken(localStorage.token);
+  const token = getToken();
+  if (token) setAuthToken(token);
 
   return useInfiniteQuery<InfiniteTagResponse, AxiosError<APIError>>(
     KEYS.TAG_TO_FOLLOW,
@@ -296,7 +299,8 @@ export function useTagsToFollow() {
 }
 
 export function useFollowTag() {
-  localStorage.token && setAuthToken(localStorage.token);
+  const token = getToken();
+  if (token) setAuthToken(token);
   const queryClient = useQueryClient();
 
   return useMutation(

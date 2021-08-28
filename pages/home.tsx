@@ -16,6 +16,15 @@ import * as ROUTES from '../src/lib/routes';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    box: {
+      flexGrow: 1,
+      marginTop: theme.spacing(0.5),
+    },
+    container: {
+      display: 'flex',
+      flexDirection: 'column',
+      marginTop: 4,
+    },
     appbar: {
       boxShadow: theme.shadows[0],
       backgroundColor: theme.palette.background.paper,
@@ -35,9 +44,9 @@ export default function Home() {
   const key =
     value === 1 ? [KEYS.HOME_FEED, 'top'] : [KEYS.HOME_FEED, 'latest'];
 
-  console.log(isAuthenticated);
-  console.log(isLoading);
-  console.log(error);
+  const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    setValue(newValue);
+  };
 
   useEffect(() => {
     if ((!isLoading && !isAuthenticated) || error) {
@@ -52,32 +61,59 @@ export default function Home() {
       </Head>
       <Wrapper cacheKey={key}>
         <Header avatar title='home' />
-        <Box flexGrow={1} mt={0.5}>
-          <AppBar position='static' className={classes.appbar}>
-            <Tabs
-              value={value}
-              onChange={() => setValue(value)}
-              aria-label='Tag Tab'
-              textColor='primary'
-              indicatorColor='primary'
-              variant='fullWidth'
-            >
-              <Tab
-                label='Latest'
-                {...a11yProps('latest')}
-                className={classes.tab}
-              />
-              <Tab label='Top' {...a11yProps('top')} className={classes.tab} />
-            </Tabs>
-          </AppBar>
+        <div className={classes.box}>
+          <div className={classes.container}>
+            <AppBar position='static' className={classes.appbar}>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                aria-label='Tag Tab'
+                textColor='primary'
+                indicatorColor='primary'
+                variant='fullWidth'
+              >
+                <Tab
+                  label='Latest'
+                  {...a11yProps('latest')}
+                  className={classes.tab}
+                />
+                <Tab
+                  label='Top'
+                  {...a11yProps('top')}
+                  className={classes.tab}
+                />
+              </Tabs>
+            </AppBar>
+          </div>
           <TabPanel type='latest' value={value} index={0}>
             <TabChild cacheKey={key} url={`/posts?latest=true`} />
           </TabPanel>
           <TabPanel value={value} index={1} type='top'>
             <TabChild cacheKey={key} url={`/posts?top=true`} />
           </TabPanel>
-        </Box>
+        </div>
       </Wrapper>
     </>
   );
 }
+
+// export const getServerSideProps = async (context) => {
+//   const token = windows.localStorage.getItem('wittiUser');
+//   console.log('token: ', token);
+//   if (token) setAuthToken(token);
+
+//   const { data }: AxiosResponse<User> = await axios.get('/users/auth', {});
+
+//   if (!data) {
+//     return {
+//       redirect: {
+//         destination: ROUTES.LOGIN,
+//         permanent: false,
+//       },
+//     };
+//   }
+
+//   return {
+//     props: { data },
+//   };
+// };

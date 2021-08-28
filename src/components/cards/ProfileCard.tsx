@@ -200,7 +200,7 @@ export default function ProfileCard({ user, page, meta, cacheKey }: IProps) {
                     component='p'
                     color='textSecondary'
                   >
-                    <Link color='inherit' href={`/user/${username}/followers`}>
+                    <Link color='inherit' href={`/${username}/followers`}>
                       <span
                         className={classes.button}
                       >{`${user.followers}`}</span>
@@ -208,7 +208,7 @@ export default function ProfileCard({ user, page, meta, cacheKey }: IProps) {
                     </Link>
                     <Link
                       color='inherit'
-                      href={`/user/${username}/following`}
+                      href={`/${username}/following`}
                       style={{ marginLeft: 24 }}
                     >
                       <span

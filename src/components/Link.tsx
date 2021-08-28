@@ -61,6 +61,10 @@ function Link(props: LinkProps) {
   const className = clsx(classNameProps, {
     [activeClassName]: router.pathname === pathname && activeClassName,
   });
+  const last = router.pathname.split('/').length - 1;
+  const isActive = pathname
+    ?.split('/')
+    .includes(router.pathname.split('/')[last]);
 
   if (naked) {
     return (
@@ -79,7 +83,7 @@ function Link(props: LinkProps) {
       className={className}
       ref={innerRef}
       href={href as string}
-      style={activeStyle}
+      style={isActive || router.pathname === pathname ? activeStyle : undefined}
       {...other}
     />
   );

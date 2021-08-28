@@ -1,12 +1,19 @@
 import React from 'react';
 import Box, { BoxProps } from '@material-ui/core/Box';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import CircularProgress, {
   CircularProgressProps,
 } from '@material-ui/core/CircularProgress';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    container: {
+      position: 'relative',
+      display: 'inherit',
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: theme.spacing(2, 0),
+    },
     bottom: {
       color: theme.palette.common.white,
     },
@@ -22,17 +29,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function CircularLoading(props: CircularProgressProps) {
+export function CircularLoading(props: CircularProgressProps) {
   const classes = useStyles();
 
   return (
-    <Box
-      py={2}
-      position='relative'
-      display='inherit'
-      justifyContent='center'
-      alignItems='center'
-    >
+    <div className={classes.container}>
       <CircularProgress
         variant='determinate'
         className={classes.bottom}
@@ -52,6 +53,22 @@ export default function CircularLoading(props: CircularProgressProps) {
         thickness={4}
         {...props}
       />
-    </Box>
+    </div>
   );
 }
+
+interface CenteredLoadingProps extends BoxProps {
+  size?: number;
+}
+
+export const CenteredLoading = (props: CenteredLoadingProps) => (
+  <Box
+    display='flex'
+    alignItems='center'
+    justifyContent='center'
+    py={4}
+    {...props}
+  >
+    <CircularLoading size={props.size} />
+  </Box>
+);

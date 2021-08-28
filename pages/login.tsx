@@ -61,7 +61,7 @@ export default function Login() {
     if (getToken() && isAuthenticated) {
       router.replace(ROUTES.HOME);
     }
-  }, [getToken, isAuthenticated]);
+  }, [isAuthenticated, router]);
 
   return (
     <React.Fragment>

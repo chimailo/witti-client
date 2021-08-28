@@ -37,6 +37,12 @@ const useStyles = makeStyles((theme: Theme) =>
       width: theme.spacing(4),
       height: theme.spacing(4),
     },
+    titleContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      marginLeft: theme.spacing(2),
+    },
     title: {
       textTransform: 'capitalize',
       lineHeight: '1.4',
@@ -78,7 +84,7 @@ export default function Header(props: HeaderProps) {
 
   return (
     <Toolbar classes={{ root: classes.toolbar }} disableGutters>
-      <Box display='flex' flexGrow={1} position='relative'>
+      <Box display='flex' flexGrow={1} position='relative' alignItems='center'>
         {back && (
           <IconButton
             size='small'
@@ -102,12 +108,7 @@ export default function Header(props: HeaderProps) {
           </IconButton>
         )}
         {title && (
-          <Box
-            ml={1}
-            display='flex'
-            flexDirection='column'
-            justifyContent='center'
-          >
+          <div className={classes.titleContainer}>
             <Typography
               variant='subtitle1'
               component='h3'
@@ -125,7 +126,7 @@ export default function Header(props: HeaderProps) {
                 <small>{meta}</small>
               </Typography>
             )}
-          </Box>
+          </div>
         )}
         {search && <Search />}
         <Hidden smUp>

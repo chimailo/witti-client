@@ -1,9 +1,9 @@
 import React, { Fragment, useRef } from 'react';
 import { Box, Typography } from '@material-ui/core';
-import LoadMore from '../Loading';
+import LoadMore from '../LoadMore';
 import PostCard from '../cards/PostCard';
 import useIntersectionObserver from '../../lib/hooks/useIntersectionObserver';
-import CircularLoading from '../Loading';
+import { CenteredLoading } from '../Loading';
 import { useInfinitePosts } from '../../lib/hooks/posts';
 
 interface TabPanelProps {
@@ -57,13 +57,10 @@ export default function TabChild({ url, cacheKey }: TabProps) {
     onIntersect: () => fetchNextPage(),
   });
 
-  console.log(isLoading);
-  console.log(data);
-
   return (
     <>
       {isLoading ? (
-        <CircularLoading />
+        <CenteredLoading />
       ) : isError ? (
         <Box py={4}>
           <Typography color='textSecondary' align='center'>
@@ -82,7 +79,7 @@ export default function TabChild({ url, cacheKey }: TabProps) {
             </Fragment>
           ))}
           <LoadMore
-            fullWidth
+            // fullWidth
             resource='posts'
             iconSize={24}
             ref={loadMoreRef}

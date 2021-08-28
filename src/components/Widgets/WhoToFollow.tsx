@@ -6,7 +6,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Paper from '@material-ui/core/Paper';
 import { Typography, Button, Divider, Box } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import CircularLoading from '../Loading';
+import { CenteredLoading } from '../Loading';
 import Link from '../Link';
 import { KEYS } from '../../lib/constants';
 import { useFollowUser, useToFollow } from '../../lib/hooks/user';
@@ -48,7 +48,7 @@ export default function WhoToFollow() {
       <Divider />
       <List>
         {isLoading ? (
-          <CircularLoading />
+          <CenteredLoading />
         ) : isError ? (
           <ListItem>
             <ListItemText primary='An unexpected error occured, please try again' />

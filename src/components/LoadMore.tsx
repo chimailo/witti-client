@@ -1,27 +1,10 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import Button, { ButtonProps } from '@material-ui/core/Button';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import Loading from './Loading';
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    bottom: {
-      color: theme.palette.common.white,
-    },
-    top: {
-      color: theme.palette.primary.main,
-      animationDuration: '500ms',
-      position: 'absolute',
-      left: 0,
-    },
-    circle: {
-      strokeLinecap: 'round',
-    },
-  })
-);
+import { CircularLoading } from './Loading';
 
 interface LoadMoreProps extends ButtonProps {
+  fullWidth?: boolean;
   iconSize: number;
   resource?: string;
   hasNextPage?: boolean;
@@ -34,6 +17,7 @@ export default React.forwardRef<HTMLButtonElement | null, LoadMoreProps>(
   (props, ref) => {
     const router = useRouter();
     const {
+      fullWidth,
       iconSize,
       resource,
       hasNextPage,
@@ -45,7 +29,8 @@ export default React.forwardRef<HTMLButtonElement | null, LoadMoreProps>(
       <>
         {isFetchingNextPage ? (
           <Button
-            endIcon={<Loading size={iconSize} />}
+            fullWidth={fullWidth}
+            endIcon={<CircularLoading />}
             disabled={isFetchingNextPage}
             {...props}
           >

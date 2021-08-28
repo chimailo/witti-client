@@ -14,7 +14,7 @@ import {
   ListItemText,
   useMediaQuery,
 } from '@material-ui/core';
-import CircularLoading from './Loading';
+import { CircularLoading } from './Loading';
 import { APIError, Search } from '../../types';
 import { setAuthToken } from '../lib/axiosConfig';
 

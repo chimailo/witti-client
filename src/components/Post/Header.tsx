@@ -44,7 +44,7 @@ export default function PostHeader({ post, page }: PostHeaderProps) {
       <Box display='flex' alignItems='center' mb={2}>
         <Link
           underline='none'
-          href={`/user/${post.author.username}`}
+          href={`/${post.author.username}/profile`}
           className={classes.link}
         >
           <Avatar
