@@ -112,9 +112,6 @@ const Landing: NextPage = () => {
         <title>Witti</title>
         <meta name='description' content='share witty comments' />
       </Head>
-      {loading ? (
-        <CenteredLoading height='100vh' />
-      ) : (
         <div className={classes.root}>
           <div className={classes.imgContainer}>
             <Image
@@ -200,7 +197,6 @@ const Landing: NextPage = () => {
             </section>
           </Box>
         </div>
-      )}
     </>
   );
 };

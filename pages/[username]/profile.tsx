@@ -52,7 +52,8 @@ export default function Tag() {
   return (
     <>
       <Head>
-        <title>Profile | {user?.profile.name}</title>
+        <title>{user?.profile.name} Profile | Witti</title>
+        <meta name='description' content={`${user?.profile.name}'s profile`} />
       </Head>
       <Wrapper>
         <Header back title={`${user?.profile.name} `} />

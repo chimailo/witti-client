@@ -95,6 +95,7 @@ const ListItemLink = (props: ListItemLinkProps) => {
       // eslint-disable-next-line react/display-name
       React.forwardRef<any, Omit<LinkProps, 'href'>>((itemProps, ref) => (
         <Link
+          underline='none'
           href={to}
           ref={ref}
           activeStyle={{ color: theme.palette.primary.main }}
