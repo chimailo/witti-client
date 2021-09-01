@@ -58,8 +58,8 @@ export function useSendMessage() {
       to,
     }: {
       message: string;
-      to: { id: number; username: string };
-      from?: number;
+      to: { id: string; username: string };
+      from?: string;
     }) => {
       const res: AxiosResponse<Message> = await axios.post(
         `/messages?user=${to.id}`,

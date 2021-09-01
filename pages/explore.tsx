@@ -7,7 +7,6 @@ import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-import { useRouter } from 'next/router';
 
 import Header from '../src/components/Header';
 import LoadMore from '../src/components/LoadMore';
