@@ -31,7 +31,7 @@ export default function AuthUserContext({
     try {
       const unsubscriber = firebase.auth().onAuthStateChanged(async (user) => {
         if (user) {
-          setToken(await user.getIdToken());
+          setToken(await user.getIdToken(true));
           setAuthenticated(true);
           setLoading(false);
         }

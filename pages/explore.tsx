@@ -55,6 +55,7 @@ export default function Explore() {
     isLoading,
     isError,
     fetchNextPage,
+    refetch,
     hasNextPage,
     isFetchingNextPage,
   } = useTagsToFollow();
@@ -91,11 +92,15 @@ export default function Explore() {
           {isLoading ? (
             <CenteredLoading />
           ) : isError ? (
-            <Box py={4}>
-              <Typography color='textSecondary' align='center'>
-                {error?.response?.data.message}
-              </Typography>
-            </Box>
+            error?.code === '401' ? (
+              refetch()
+            ) : (
+              <Box py={4}>
+                <Typography color='textSecondary' align='center'>
+                  {error?.response?.data.message}
+                </Typography>
+              </Box>
+            )
           ) : (
             <>
               {data?.pages.map((page, i) => (
