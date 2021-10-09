@@ -112,91 +112,91 @@ const Landing: NextPage = () => {
         <title>Witti</title>
         <meta name='description' content='share witty comments' />
       </Head>
-        <div className={classes.root}>
-          <div className={classes.imgContainer}>
-            <Image
-              src='/hero.jpg'
-              alt='Logo'
-              placeholder='blur'
-              className={classes.image}
-            />
-          </div>
-          <AppBar color='transparent' elevation={0}>
-            <Container maxWidth='md'>
-              <Toolbar
-                component='nav'
-                disableGutters
-                style={{ justifyContent: 'space-between' }}
-              >
-                <Logo />
-                <div>
-                  <Button
-                    variant='outlined'
-                    color='secondary'
-                    href={ROUTES.SIGNUP}
-                    className={classes.margin}
-                  >
-                    Sign up
-                  </Button>
-                  <Button
-                    color='secondary'
-                    href={ROUTES.LOGIN}
-                    className={classes.margin}
-                  >
-                    Login
-                  </Button>
-                </div>
-              </Toolbar>
-            </Container>
-          </AppBar>
-          <Box
-            height={400}
-            component='main'
-            display='flex'
-            flexDirection='column'
-            justifyContent='space-between'
-          >
-            <Container maxWidth='sm' className={classes.main}>
-              <Typography
-                align='center'
-                variant={matchesXs ? 'h4' : 'h3'}
-                component='h1'
-                color='secondary'
-                gutterBottom
-              >
-                Want to see something funny?
-              </Typography>
-              <Typography
-                component='h6'
-                align='center'
-                color='secondary'
-                paragraph
-              >
-                Join in the fun and share your funny moments.
-              </Typography>
-              <Button
-                size='large'
-                variant='outlined'
-                color='primary'
-                onClick={() => router.push(ROUTES.SIGNUP)}
-                style={{ margin: 'auto' }}
-              >
-                Join for free.
-              </Button>
-            </Container>
-            <section className={classes.sample}>
-              <Container maxWidth='sm'>
-                {isLoading && <CenteredLoading />}
-                {isError && (
-                  <Typography component='p' align='center'>
-                    An error occured
-                  </Typography>
-                )}
-                {posts && <FeaturedPostsCarousel posts={posts} />}
-              </Container>
-            </section>
-          </Box>
+      <div className={classes.root}>
+        <div className={classes.imgContainer}>
+          <Image
+            src='/hero.png'
+            alt='Hero background image'
+            placeholder='blur'
+            className={classes.image}
+          />
         </div>
+        <AppBar color='transparent' elevation={0}>
+          <Container maxWidth='md'>
+            <Toolbar
+              component='nav'
+              disableGutters
+              style={{ justifyContent: 'space-between' }}
+            >
+              <Logo />
+              <div>
+                <Button
+                  variant='outlined'
+                  color='secondary'
+                  href={ROUTES.SIGNUP}
+                  className={classes.margin}
+                >
+                  Sign up
+                </Button>
+                <Button
+                  color='secondary'
+                  href={ROUTES.LOGIN}
+                  className={classes.margin}
+                >
+                  Login
+                </Button>
+              </div>
+            </Toolbar>
+          </Container>
+        </AppBar>
+        <Box
+          height={400}
+          component='main'
+          display='flex'
+          flexDirection='column'
+          justifyContent='space-between'
+        >
+          <Container maxWidth='sm' className={classes.main}>
+            <Typography
+              align='center'
+              variant={matchesXs ? 'h4' : 'h3'}
+              component='h1'
+              color='secondary'
+              gutterBottom
+            >
+              Want to see something funny?
+            </Typography>
+            <Typography
+              component='h6'
+              align='center'
+              color='secondary'
+              paragraph
+            >
+              Join in the fun and share your funny moments.
+            </Typography>
+            <Button
+              size='large'
+              variant='outlined'
+              color='primary'
+              onClick={() => router.push(ROUTES.SIGNUP)}
+              style={{ margin: 'auto' }}
+            >
+              Join for free.
+            </Button>
+          </Container>
+          <section className={classes.sample}>
+            <Container maxWidth='sm'>
+              {isLoading && <CenteredLoading />}
+              {isError && (
+                <Typography component='p' align='center'>
+                  An error occured
+                </Typography>
+              )}
+              {posts && <FeaturedPostsCarousel posts={posts} />}
+            </Container>
+          </section>
+        </Box>
+      </div>
     </>
   );
 };
